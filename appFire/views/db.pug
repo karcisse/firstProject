@@ -1,0 +1,48 @@
+extends ../node_modules/pug-bootstrap/_bootstrap.pug
+block body
+    .container
+        h1 Welcome to #{appName}
+        table(class="table")
+            thead
+                th ID
+                th Name
+                th State
+            tbody
+                each person in persons
+                    tr
+                        td #{person.id}
+                        td #{person.name}
+                        td #{person.state}
+        div
+            p Car name: #{car.name}
+            p(style={ color: '#' + car.color }) Car color: #{car.color}
+            p Car belongs to #{persons.find((p) => p.id === car.ownerId).name}
+            hr
+        div(style={ display: 'flex' })
+            form(name="addPerson" method="POST" action="/db/add" style={margin: '30px'})
+                div
+                    label ID
+                    input(class="form-control" name="id" type="number" style={ width: '300px' })
+                div
+                    label Name
+                    input(class="form-control" name="name" type="text" style={ width: '300px' })
+                div
+                    label State
+                    input(class="form-control" name="state" type="text" style={ width: '300px' })
+                button(class="btn-success" type="submit" action='/database/add') ADD PERSON!
+            form(name="update" method="POST" action="/db/update" style={margin: '30px'})
+                div
+                    label ID
+                    input(class="form-control" name="id" type="number" style={ width: '300px' })
+                div
+                    label Name
+                    input(class="form-control" name="name" type="text" style={ width: '300px' })
+                div
+                    label State
+                    input(class="form-control" name="state" type="text" style={ width: '300px' })
+                button(class="btn-info" type="submit" action='/db/update') UPDATE PERSON!
+            form(name="removePerson" method="POST" action="/db/remove" style={margin: '30px'})
+                label ID:
+                input(class="form-control"  name="id" type="number" style={ width: '100px' })
+                button(class="btn-danger") REMOVE PERSON!
+        span Version: #{version}
